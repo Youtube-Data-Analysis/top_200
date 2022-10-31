@@ -12,7 +12,7 @@ unsafe_characters = ['\n', '"']
 # Used to identify columns, currently hardcoded order
 header = ["video_id"] + snippet_features + ["trending_date", "tags", "view_count", "likes",
                                             "comment_count", "thumbnail_link", "comments_disabled",
-                                            "ratings_disabled", "description","duration", "captions","age_restricted"]
+                                            "ratings_disabled", "description","duration", "captions"]
 
 
 def setup(api_path, code_path):
@@ -79,7 +79,7 @@ def get_videos(items):
         view_count = statistics.get("viewCount", 0)
         duration = cd.get("duration")
         captions = cd.get("caption")
-        age_restricted =  cd.get("contentRating.ytRating")
+        #age_restricted =  cd.get("contentRating.ytRating")
 
         # This may be unclear, essentially the way the API works is that if a video has comments or ratings disabled
         # then it has no feature for it, thus if they don't exist in the statistics dict we know they are disabled
@@ -98,7 +98,7 @@ def get_videos(items):
         # Compiles all of the various bits of info into one consistently formatted line
         line = [video_id] + features + [prepare_feature(x) for x in [trending_date, tags, view_count, likes,
                                                                        comment_count, thumbnail_link, comments_disabled,
-                                                                       ratings_disabled, description, duration, captions, age_restricted]]
+                                                                       ratings_disabled, description, duration, captions]]
         lines.append(",".join(line))
     return lines
 

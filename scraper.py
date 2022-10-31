@@ -12,7 +12,7 @@ unsafe_characters = ['\n', '"']
 # Used to identify columns, currently hardcoded order
 header = ["video_id"] + snippet_features + ["trending_date", "tags", "view_count", "likes",
                                             "comment_count", "thumbnail_link", "comments_disabled",
-                                            "ratings_disabled", "description","duration", "captions"]
+                                            "ratings_disabled", "description","duration", "captions","age_restricted"]
 
 
 def setup(api_path, code_path):
@@ -24,7 +24,7 @@ def setup(api_path, code_path):
 
     return api_key, country_codes
 
-api_key, country_codes = setup(api_path=r'/Users/vincentbanuelos/codeup-data-science/top_200/api_key.txt',code_path=r'/Users/vincentbanuelos/codeup-data-science/top_200/country_codes.txt')
+api_key, country_codes = setup(api_path='api_key.txt',code_path='country_codes.txt')
 
 
 def prepare_feature(feature):
@@ -36,7 +36,7 @@ def prepare_feature(feature):
 
 def api_request(page_token, country_code):
     # Builds the URL and requests the JSON from it
-    request_url = f"https://www.googleapis.com/youtube/v3/videos?part=id,statistics,snippet,contentDetails{page_token}chart=mostPopular&regionCode={country_code}&maxResults=50&key={api_key}"
+    request_url = f"https://www.googleapis.com/youtube/v3/videos?part=contentDetails&part=statistics&part=snippet{page_token}chart=mostPopular&regionCode={country_code}&maxResults=50&key={api_key}"
     request = requests.get(request_url)
     if request.status_code == 429:
         print("Temp-Banned due to excess requests, please wait and continue later")
@@ -67,7 +67,6 @@ def get_videos(items):
         snippet = video['snippet']
         statistics = video['statistics']
         cd = video['contentDetails']
-    
 
         # This list contains all of the features in snippet that are 1 deep and require no special processing
         features = [prepare_feature(snippet.get(feature, "")) for feature in snippet_features]
@@ -80,6 +79,7 @@ def get_videos(items):
         view_count = statistics.get("viewCount", 0)
         duration = cd.get("duration")
         captions = cd.get("caption")
+        age_restricted =  cd.get("contentRating.ytRating")
 
         # This may be unclear, essentially the way the API works is that if a video has comments or ratings disabled
         # then it has no feature for it, thus if they don't exist in the statistics dict we know they are disabled
@@ -98,7 +98,7 @@ def get_videos(items):
         # Compiles all of the various bits of info into one consistently formatted line
         line = [video_id] + features + [prepare_feature(x) for x in [trending_date, tags, view_count, likes,
                                                                        comment_count, thumbnail_link, comments_disabled,
-                                                                       ratings_disabled, description, duration, captions]]
+                                                                       ratings_disabled, description, duration, captions, age_restricted]]
         lines.append(",".join(line))
     return lines
 

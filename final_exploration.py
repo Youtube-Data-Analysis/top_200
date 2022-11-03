@@ -149,10 +149,10 @@ def comments_stats(train):
         
 def comments_stats2(train):  
     from scipy import stats
-    alternative_hypothesis = 'comment_count is related to view_count'
+    alternative_hypothesis = 'comment_count is related to engagement'
     alpha = .05
     x = train.comment_count
-    y = train.view_count
+    y = train.engagement
     corr, p = stats.pearsonr(x, y)
     if p < alpha:
         print("We reject the null hypothesis")
@@ -164,7 +164,49 @@ def comments_stats2(train):
         
 #graph----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-
+def plot_conf(ax, xlbl='', ylbl='', t='', back_color='#ffffff',
+              text_color='#616161', grid_color='#e9e9e9', 
+              tick_color='', ticklbl_size=9, lbl_size=11, lang='en'):
+    """
+    This function perform operations to produce better-looking 
+    visualizations
+    """
+    # changing the background color of the plot
+    ax.set_facecolor(back_color)
+    # modifying the ticks on plot axes
+    ax.tick_params(axis='both', labelcolor=text_color, color=back_color)
+    if tick_color != '':
+        ax.tick_params(axis='both', color=tick_color)
+    ax.tick_params(axis='both', which='major', labelsize=ticklbl_size)
+    # adding a grid and specifying its color
+    ax.grid(True, color=grid_color)
+    # making the grid appear behind the graph elements
+    ax.set_axisbelow(True)
+    # hiding axes
+    ax.spines['bottom'].set_color(back_color)
+    ax.spines['top'].set_color(back_color) 
+    ax.spines['right'].set_color(back_color)
+    ax.spines['left'].set_color(back_color)
+    # setting the title, x label, and y label of the plot
+    if lang == 'ar':
+        ax.set_title(get_display(reshaper.reshape(t)), fontweight='bold', family='Amiri',
+                     fontsize=14, color=text_color, loc='right', pad=24);
+        ax.set_xlabel(get_display(reshaper.reshape(xlbl)), fontweight='bold', family='Amiri',
+                      labelpad=16, fontsize=lbl_size, color=text_color, fontstyle='italic');
+        ax.set_ylabel(get_display(reshaper.reshape(ylbl)), fontweight='bold', family='Amiri',
+                      color=text_color, labelpad=16, fontsize=lbl_size, fontstyle='italic');
+    else:
+        ax.set_title(t, fontsize=14, color='#616161', loc='left', pad=24, fontweight='bold');
+        ax.set_xlabel(xlbl, labelpad=16, fontsize=lbl_size, color='#616161', fontstyle='italic');
+        ax.set_ylabel(ylbl, color='#616161', labelpad=16, fontsize=lbl_size, fontstyle='italic');
+        
+def graph_overall(df):
+    tdf = df.groupby("categoryId").size().reset_index(name="video_count").sort_values("video_count", ascending=False).head(20)
+    fig, ax = plt.subplots(figsize=(14,10))
+    sns.barplot(x="video_count", y="categoryId", data=tdf,
+                palette=sns.color_palette('gist_heat', n_colors=25)[3:], ax=ax);
+    plot_conf(ax, xlbl='Number of videos', ylbl='Channel', ticklbl_size=11, lbl_size=12)
+    plt.tight_layout()
 
 def disable_comments(train):
     labels = pd.concat([train.comments_disabled.value_counts(),train.comments_disabled.value_counts(normalize=True)], axis=1)
@@ -189,14 +231,14 @@ def comments_views(train):
     #the amount of comments effect the amoutn. of views 
     train = train[~train.index.duplicated()]
     plt.figure(figsize=(18,10))
-    sns.lineplot(data=train,x='comment_count',y='view_count')
+    sns.lineplot(data=train,x='comment_count',y='engagement')
     plt.title('view per comment_count')
     plt.show()
     
 def comments_views2(train):
     #the amount of comments effect the amoutn. of views 
     plt.figure(figsize=(18,10))
-    sns.lineplot(data=train,x='comment_count',y='view_count',hue='categoryId')
+    sns.lineplot(data=train,x='comment_count',y='engagement',hue='categoryId')
     plt.title('view per comment_count')
     plt.show()
     

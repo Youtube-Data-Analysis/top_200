@@ -99,8 +99,8 @@ def basic_clean(article0):
     return article
 
 def prepare_df(df):
-    #df['rank'] = df.index + 1
-    #df=df.reset_index()
+    '''preparing the data frame by renaming region names
+    rreplacing the nulls with non desceription'''
     # cleaning the data for world cloud
     df.region = df.region.map({'IND': 'India', 'JP': ' Japan', 'DE':'Germany','FR':'France','KR':'Korea','RU':'Russia','MX':'Mexico','BR':'Brazil','US':'United_States','CA':'Canada','GB':'United_Kingdon'})
     df = df[df.description.isna()==False]
@@ -136,7 +136,8 @@ def train_validate_test_split(df, seed=123):
 #stats----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 #anova test
-def comments_stats(train):  
+def comments_stats(train): 
+    ''' a nova test that compares comments disabled to view count'''
     from scipy import stats
     alternative_hypothesis = 'comments_disabled is related to view_count'
     alpha = .05
@@ -148,6 +149,7 @@ def comments_stats(train):
         print("We fail to reject the null")
         
 def comments_stats2(train):  
+    '''corr test that compared commment count to engagement '''
     from scipy import stats
     alternative_hypothesis = 'comment_count is related to engagement'
     alpha = .05
@@ -201,14 +203,16 @@ def plot_conf(ax, xlbl='', ylbl='', t='', back_color='#ffffff',
         ax.set_ylabel(ylbl, color='#616161', labelpad=16, fontsize=lbl_size, fontstyle='italic');
         
 def graph_overall(df):
+    '''This function is to view a overall graph of every categories '''
     tdf = df.groupby("categoryId").size().reset_index(name="video_count").sort_values("video_count", ascending=False).head(20)
     fig, ax = plt.subplots(figsize=(14,10))
     sns.barplot(x="video_count", y="categoryId", data=tdf,
                 palette=sns.color_palette('gist_heat', n_colors=25)[3:], ax=ax);
-    plot_conf(ax, xlbl='Number of videos', ylbl='Channel', ticklbl_size=11, lbl_size=12)
+    plot_conf(ax, xlbl='Number of videos', ylbl='categoryId', ticklbl_size=11, lbl_size=12)
     plt.tight_layout()
 
 def disable_comments(train):
+    '''graph for disable comments overall'''
     labels = pd.concat([train.comments_disabled.value_counts(),train.comments_disabled.value_counts(normalize=True)], axis=1)
     labels.columns = ['n', 'percent']
     plt.figure(figsize=(16,16))
@@ -221,6 +225,7 @@ def disable_comments(train):
     plt.show() 
     
 def disable_comments2(train):
+    '''do comments effect the amount of views a video would acquired'''
     plt.figure(figsize=(18,8))
 
     sns.barplot(data=train,x='comments_disabled',y='view_count')
@@ -228,6 +233,8 @@ def disable_comments2(train):
     
     
 def comments_views(train):
+    ''' comment count graph cmompared to engagement'''
+    
     #the amount of comments effect the amoutn. of views 
     train = train[~train.index.duplicated()]
     plt.figure(figsize=(18,10))
@@ -236,6 +243,7 @@ def comments_views(train):
     plt.show()
     
 def comments_views2(train):
+    '''comment count graph compared to engagement'''
     #the amount of comments effect the amoutn. of views 
     plt.figure(figsize=(18,10))
     sns.lineplot(data=train,x='comment_count',y='engagement',hue='categoryId')
@@ -243,6 +251,7 @@ def comments_views2(train):
     plt.show()
     
 def category_views(df):
+    '''category graph that show the percent of all category'''
     labels = pd.concat([df.categoryId.value_counts(),df.categoryId.value_counts(normalize=True)], axis=1)
     labels.columns = ['n', 'percent']
     plt.figure(figsize=(16,16))
@@ -255,6 +264,7 @@ def category_views(df):
     plt.show() 
     
 def category_views2(train):
+    '''category compared to view count graph '''
     plt.figure(figsize=(18,8))
     sns.barplot(data=train,x='categoryId',y='view_count')
     plt.title('view per category')
@@ -310,6 +320,7 @@ def category_views3(train,population_name="categoryId",numerical_feature="view_c
     
     
 def sport_biograms(train):
+    '''biograms sport'''
     Sports = ' '.join(train[train.categoryId == 'Sports'].lemmatized).split()
     top_20_ham_bigrams = (pd.Series(nltk.ngrams(Sports, 2))
                           .value_counts()
@@ -326,6 +337,7 @@ def sport_biograms(train):
     _ = plt.yticks(ticks, labels)
     
 def entertainment_biograms(train):
+    '''biograms entertainment'''
     Entertainment = ' '.join(train[train.categoryId == 'Entertainment'].lemmatized).split()
     top_20_ham_bigrams = (pd.Series(nltk.ngrams(Entertainment, 2))
                           .value_counts()
@@ -342,6 +354,7 @@ def entertainment_biograms(train):
     _ = plt.yticks(ticks, labels)
     
 def gaming_biograms(train):
+    '''biogramsgaming '''
     Gaming = ' '.join(train[train.categoryId == 'Gaming'].lemmatized).split()
     top_20_ham_bigrams = (pd.Series(nltk.ngrams(Gaming, 2))
                           .value_counts()
@@ -359,6 +372,7 @@ def gaming_biograms(train):
     
     
 def Music_biograms(train):
+    '''biograms music'''
     Music = ' '.join(train[train.categoryId == 'Music'].lemmatized).split()
     top_20_ham_bigrams = (pd.Series(nltk.ngrams(Music, 2))
                           .value_counts()
@@ -376,6 +390,7 @@ def Music_biograms(train):
     
     
 def word_count(train):
+    '''total word count for all of categories'''
     lang_dict={"Language":[],"Words":[]}
     for lang in train["categoryId"].unique():
         lang_dict["Language"].append(lang)
@@ -394,6 +409,7 @@ def word_count(train):
     print(lang.count_set_words)
     
 def word_count2(train):
+    '''total word count for all of categories'''
     lang_dict={"Language":[],"Words":[]}
     for lang in train["categoryId"].unique():
         lang_dict["Language"].append(lang)
@@ -406,12 +422,13 @@ def word_count2(train):
         most_common_list.append(most_common[:5].index.tolist())
     lang["most_common"] = pd.Series(most_common_list)
     lang["count_set_words"] = lang["Words"].apply(set).apply(len)
-    sns.pointplot(data=lang, x="count_set_words", y="Language") #,height=11,aspect=1.5)
+    sns.pointplot(data=lang, x="count_set_words", y="Language",height=11,aspect=1.5)
     plt.title('Total count of words')
     plt.show()
     
     
 def region_category(train):
+    '''comparing categories with region '''
     #fix the percentages
     plt.figure(figsize=(30,20))
     plt.title('view per category')
@@ -420,6 +437,7 @@ def region_category(train):
     plt.show()
     
 def region_category2(train):
+    '''Does region effect what categories would be trending or not '''
     #fix the percentages
     plt.figure(figsize=(15,10))
     plt.title('likes per category/region')

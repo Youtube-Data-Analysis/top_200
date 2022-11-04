@@ -107,6 +107,7 @@ tags_length             | 9536           | non-null | int64      |
 ## <a name="reproduce"></a>Reproduction Requirements:
 
 * Utilize the linked .pkl file that contains the data for the project
+  * https://drive.google.com/file/d/1twg97V0zm_OUcnyWqzYRs38iNuI-5Yc1/view?usp=share_link
   * Alternatively, you will need your own Youtube Analytics API key *** to acquire new data
 * Follow the steps below:
   * Download prepared.pkl, acquire.py, model.py, explore.py, and final_report.ipynb files
@@ -138,8 +139,10 @@ tags_length             | 9536           | non-null | int64      |
 ---
 
 ## Exploration Summary
-
-- 
+- Entertainment might have been the highest overall but doesnt mean it was liked/or viewed the most. Just means most videos are categories as entertainment
+- Music/Entertainment have the highest words count but it could be because they both take up at least 15 percent and above of the whole dataframe
+- Region effect on trending video alot because in some country music isnt the highest or entertainment 
+- Having the comments enabled doesnt really effect the like/views to high so i think it doesnt matter if the video is bad or good as longest it gets views or some likes.
 ---
 
 ## Modeling Summary
@@ -153,11 +156,14 @@ tags_length             | 9536           | non-null | int64      |
 
 # Conclusion
 ## Summary of Key Findings
-* 
-* 
-* 
-* 
+* Entertaiment videos are by far the most popular
+* Non-Profit videos receive the most engagement
+* Global trends stay fairly consistent, but their is some variance
+* Release timing is an important factor when wanting to make the jump to becoming a Top 25 video
 ---
 ## Suggestions and Next Steps
-* 
+* Recommendations: Focus content on a mix of Non-Profit and Entertainment content released early in the day to capture widest audience
+* Future Talk: With more time we would incorporate more data featuring channel analytics because who is posting is just as important as what is being posted
+* Next Steps: Work to capture more channel information. Provide deeper insights in regards to content release schedule and global appeal
+
 [[Back to top](#top)]

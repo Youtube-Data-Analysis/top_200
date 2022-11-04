@@ -99,8 +99,8 @@ def basic_clean(article0):
     return article
 
 def prepare_df(df):
-    df['rank'] = df.index + 1
-    df=df.reset_index()
+    #df['rank'] = df.index + 1
+    #df=df.reset_index()
     # cleaning the data for world cloud
     df.region = df.region.map({'IND': 'India', 'JP': ' Japan', 'DE':'Germany','FR':'France','KR':'Korea','RU':'Russia','MX':'Mexico','BR':'Brazil','US':'United_States','CA':'Canada','GB':'United_Kingdon'})
     df = df[df.description.isna()==False]
@@ -406,7 +406,7 @@ def word_count2(train):
         most_common_list.append(most_common[:5].index.tolist())
     lang["most_common"] = pd.Series(most_common_list)
     lang["count_set_words"] = lang["Words"].apply(set).apply(len)
-    sns.pointplot(data=lang, x="count_set_words", y="Language",height=11,aspect=1.5)
+    sns.pointplot(data=lang, x="count_set_words", y="Language") #,height=11,aspect=1.5)
     plt.title('Total count of words')
     plt.show()
     

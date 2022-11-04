@@ -44,9 +44,9 @@ def my_train_test_split(df, target):
     
     return train, validate, test
 
-train, validate, test = my_train_test_split(df, 'top_25')
+    train, validate, test = my_train_test_split(df, 'top_25')
 
-train.shape,validate.shape,test.shape
+    train.shape,validate.shape,test.shape
 
 
 #-----------------------------------------------------------------------------------------------------------
@@ -112,8 +112,8 @@ def run_decision_tree_models(df):
     """
 
     #loop the model with changing max depth only
-model_scores = []
-for i in range(1,15):
+    model_scores = []
+    for i in range(1,15):
     model = DecisionTreeClassifier(max_depth=i, random_state =123)
     model.fit(X_train, y_train)
     y_pred = model.predict(X_train)
@@ -122,9 +122,9 @@ for i in range(1,15):
     difference = accuracy_train-accuracy_validate
     output = {"i":i, "accuracy_train":accuracy_train,"accuracy_validate":accuracy_validate,"difference":difference}
     model_scores.append(output)
-df = pd.DataFrame(model_scores)
-df
-
+    df = pd.DataFrame(model_scores)
+    
+    return df
 #-----------------------------------------------------------------------------------------------------------
 #Random Forest
 
@@ -133,9 +133,9 @@ def run_random_forest_models(df):
     Run models with decision tree classifier varying depth, max leaf size, criterion
     """
 
-model_scores = []
+    model_scores = []
 
-for i in range(1,12):
+    for i in range(1,12):
 
     model = RandomForestClassifier(max_depth = i,random_state=123)
     model.fit(X_train, y_train)
@@ -145,8 +145,9 @@ for i in range(1,12):
     difference = accuracy_train-accuracy_validate
     output = {"max_depth":i, "accuracy_train":accuracy_train,"accuracy_validate":accuracy_validate,"difference":difference}
     model_scores.append(output)
-df = pd.DataFrame(model_scores)
-df
+    df = pd.DataFrame(model_scores)
+
+    return df
 
 #-----------------------------------------------------------------------------------------------------------
 #KNN Classifier
@@ -157,8 +158,8 @@ def run_kneighbors_models(df):
     """
 
     #For loop for KNN 
-empty_model = []
-for k in range(1,10):
+    empty_model = []
+    for k in range(1,10):
     model = KNeighborsClassifier(n_neighbors = k, weights = "uniform")
     model=model.fit(X_train,y_train)
     y_pred = model.predict(X_train)
@@ -170,8 +171,9 @@ for k in range(1,10):
     
     empty_model.append(output)
 
-df = pd.DataFrame(empty_model)
-df
+    df = pd.DataFrame(empty_model)
+
+    return df
 
 
 
@@ -190,5 +192,5 @@ def run_logistic_reg_models(df):
     difference = accuracy_train-accuracy_validate
     output = { "accuracy_train":accuracy_train,"accuracy_validate":accuracy_validate,"difference":difference}
     
-output  
+    return output  
 

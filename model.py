@@ -20,7 +20,8 @@ from sklearn.tree import DecisionTreeClassifier, plot_tree, export_text
 from sklearn import tree
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.linear_model import LogisticRegression
-from sklearn.model_selection import cross_val_score
+#from sklearn.model_selection import cross_val_score
+from sklearn.neighbors import KNeighborsClassifier
 
 import env
 import model
@@ -44,16 +45,16 @@ def my_train_test_split(df, target):
     
     return train, validate, test
 
-    train, validate, test = my_train_test_split(df, 'top_25')
+    #train, validate, test = my_train_test_split(df, 'top_25')
 
-    train.shape,validate.shape,test.shape
+    #train.shape,validate.shape,test.shape
 
 
 #-----------------------------------------------------------------------------------------------------------
 #scale data
 from sklearn.preprocessing import MinMaxScaler
 
-#Write function to scale data for zillow data
+#Write function to scale data for the data
 def scale_data(train, validate, test, features_to_scale):
     """Scales the 3 data splits using MinMax Scaler. 
     Takes in train, validate, and test data splits as well as a list of the features to scale. 
@@ -81,7 +82,7 @@ def scale_data(train, validate, test, features_to_scale):
 
 #-----------------------------------------------------------------------------------------------------------
 #modeling
-def getting_(train,validate,test):
+def getting_(train_scaled,validate_scaled,test_scaled):
     '''
     This function takes in train and defines x features to y target into train, validate and test
     '''
@@ -94,11 +95,13 @@ def getting_(train,validate,test):
         'pct_tags_in_description', 'title_lengths', 'desc_lengths',
         'tags_length']
     X_train = train_scaled[scaled_features]
-    y_train = train_scaled.top_25
+    y_train = train_scaled['top_25']
     X_validate = validate_scaled[scaled_features]
-    y_validate = validate_scaled.top_25
+    y_validate = validate_scaled['top_25']
     X_test = test_scaled[scaled_features]
-    y_test= test_scaled.top_25
+    y_test= test_scaled['top_25']
+
+    return X_train, y_train, X_validate, y_validate, X_test, y_test
 
 
 
@@ -106,29 +109,30 @@ def getting_(train,validate,test):
 #models
 
 #Decision Tree Classifier
-def run_decision_tree_models(df):
+def run_decision_tree_models(X_train, y_train, X_validate, y_validate):
     """
     Run models with decision tree classifier with varying max_depth
     """
 
     #loop the model with changing max depth only
     model_scores = []
+
     for i in range(1,15):
-    model = DecisionTreeClassifier(max_depth=i, random_state =123)
-    model.fit(X_train, y_train)
-    y_pred = model.predict(X_train)
-    accuracy_train = model.score(X_train,y_train)
-    accuracy_validate = model.score(X_validate,y_validate)
-    difference = accuracy_train-accuracy_validate
-    output = {"i":i, "accuracy_train":accuracy_train,"accuracy_validate":accuracy_validate,"difference":difference}
-    model_scores.append(output)
+        model = DecisionTreeClassifier(max_depth=i, random_state =123)
+        model.fit(X_train, y_train)
+        y_pred = model.predict(X_train)
+        accuracy_train = model.score(X_train,y_train)
+        accuracy_validate = model.score(X_validate,y_validate)
+        difference = accuracy_train-accuracy_validate
+        output = {"i":i, "accuracy_train":accuracy_train,"accuracy_validate":accuracy_validate,"difference":difference}
+        model_scores.append(output)
     df = pd.DataFrame(model_scores)
     
     return df
 #-----------------------------------------------------------------------------------------------------------
 #Random Forest
 
-def run_random_forest_models(df):
+def run_random_forest_models(X_train, y_train, X_validate, y_validate):
     """
     Run models with decision tree classifier varying depth, max leaf size, criterion
     """
@@ -137,14 +141,14 @@ def run_random_forest_models(df):
 
     for i in range(1,12):
 
-    model = RandomForestClassifier(max_depth = i,random_state=123)
-    model.fit(X_train, y_train)
-    y_pred = model.predict(X_train)
-    accuracy_train = model.score(X_train,y_train)
-    accuracy_validate = model.score(X_validate,y_validate)
-    difference = accuracy_train-accuracy_validate
-    output = {"max_depth":i, "accuracy_train":accuracy_train,"accuracy_validate":accuracy_validate,"difference":difference}
-    model_scores.append(output)
+        model = RandomForestClassifier(max_depth = i,random_state=123)
+        model.fit(X_train, y_train)
+        y_pred = model.predict(X_train)
+        accuracy_train = model.score(X_train,y_train)
+        accuracy_validate = model.score(X_validate,y_validate)
+        difference = accuracy_train-accuracy_validate
+        output = {"max_depth":i, "accuracy_train":accuracy_train,"accuracy_validate":accuracy_validate,"difference":difference}
+        model_scores.append(output)
     df = pd.DataFrame(model_scores)
 
     return df
@@ -152,7 +156,7 @@ def run_random_forest_models(df):
 #-----------------------------------------------------------------------------------------------------------
 #KNN Classifier
 
-def run_kneighbors_models(df):
+def run_kneighbors_models(X_train, y_train, X_validate, y_validate):
     """
     Run models with knn classifier varying depth, max leaf size, criterion
     """
@@ -160,16 +164,16 @@ def run_kneighbors_models(df):
     #For loop for KNN 
     empty_model = []
     for k in range(1,10):
-    model = KNeighborsClassifier(n_neighbors = k, weights = "uniform")
-    model=model.fit(X_train,y_train)
-    y_pred = model.predict(X_train)
-    accuracy_train = model.score(X_train,y_train)
-    accuracy_validate = model.score(X_validate,y_validate)
-    difference = accuracy_train-accuracy_validate
-    output = {"k":k, "accuracy_train":accuracy_train,"accuracy_validate":accuracy_validate,"difference":difference}
-    
-    
-    empty_model.append(output)
+        model = KNeighborsClassifier(n_neighbors = k, weights = "uniform")
+        model=model.fit(X_train,y_train)
+        y_pred = model.predict(X_train)
+        accuracy_train = model.score(X_train,y_train)
+        accuracy_validate = model.score(X_validate,y_validate)
+        difference = accuracy_train-accuracy_validate
+        output = {"k":k, "accuracy_train":accuracy_train,"accuracy_validate":accuracy_validate,"difference":difference}
+        
+        
+        empty_model.append(output)
 
     df = pd.DataFrame(empty_model)
 
@@ -180,7 +184,7 @@ def run_kneighbors_models(df):
 #-----------------------------------------------------------------------------------------------------------
 #Logistic Regression
 
-def run_logistic_reg_models(df):
+def run_logistic_reg_models(X_train, y_train, X_validate, y_validate):
     """
     Run logistic models on data varying solver and C value
     """
@@ -194,3 +198,21 @@ def run_logistic_reg_models(df):
     
     return output  
 
+
+#-----------------------------------------------------------------------------------------------------------
+#Test Model
+def run__on_test(X_train, y_train, X_test, y_test):
+    #create, fit, use, model information to model_features dfram
+    model = DecisionTreeClassifier(max_depth=14, random_state=123)
+    #features to be used
+
+    scaled_features = ['age_scaled', 'num_of_tags_scaled','duration_scaled', 'num_of_tags_scaled',
+           'engagement_scaled', 'sponsored_scaled', 'title_in_description', 'title_in_tags',
+           'pct_tags_in_description', 'title_lengths', 'desc_lengths',
+        'tags_length']
+    #fit model
+    model.fit(X_train, y_train)
+    #score model to add to model description dataframe
+    score = model.score(X_test, y_test).round(3)
+    
+    return score

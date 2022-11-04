@@ -32,14 +32,13 @@ ___
 
 ## <a name="research_questions"></a>Research Questions:
 
-* Which video category has the largest number of trending videos?
-  * 
-* Does that information change based on length, category, and global region?
-  * 
-* Are there specific words within the  description that have greater usage? Does title formatting matter?
-  * 
-* What are the most common words in trending videos?
-  * 
+* Are videos with disabled comments obtaining more views the none disable comments?
+  
+* Does comment value and views have a correlation together?
+   
+* What is the most frequent occuring bigrams per category?
+ 
+* Does category effect total amount of words?
 
 [[Back to top](#top)]
 
@@ -146,7 +145,12 @@ tags_length             | 9536           | non-null | int64      |
 ---
 
 ## Modeling Summary
-- 
+- All models had roughly almost the same accuracy for train and validate sets.
+- Logistic Regression model performed the worst on out-of-sample data.
+- The best performing model is Decision Tree Classifier.
+- However, from the above model analysis we can see that the highest accuracy is achieved by Decision Tree. It performs better than baseline by about 7%.
+
+- While this is an improvement there is still room for improvement in future iterations
 --- 
 
 [[Back to top](#top)]

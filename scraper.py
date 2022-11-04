@@ -7,6 +7,7 @@ def grab_vidz():
     snippet_features = ["title",
                         "publishedAt",
                         "channelTitle",
+                        "channelId"
                         "categoryId"]
 
     # Any characters to exclude, generally these are things that become problematic in CSV files

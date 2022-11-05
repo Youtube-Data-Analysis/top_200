@@ -23,14 +23,14 @@ from sklearn.linear_model import LogisticRegression
 #from sklearn.model_selection import cross_val_score
 from sklearn.neighbors import KNeighborsClassifier
 
-import env
+#import env
 import model
 import os
 #-----------------------------------------------------------------------------------------------------------
 #acquire 
 
 #reading the list of prepared pickle file contained in the csv file
-df = pd.read_pickle('prepared.pkl 3')
+df = pd.read_pickle('prepared.pkl')
 
 #-----------------------------------------------------------------------------------------------------------
 #split data

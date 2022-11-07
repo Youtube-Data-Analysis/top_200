@@ -54,7 +54,7 @@ def acquire ():
     df.description = df.description.fillna('no description')
     
     #performs sorted of videos in order to facilitating dropping of duplicates
-    df[df.duplicated(['video_id'], keep=False) == True].sort_values(by='rank').drop_duplicates(['video_id'], inplace=True)
+    df = df[df.duplicated(['video_id'], keep=False) == True].sort_values(by='rank').drop_duplicates(['video_id']).reset_index(drop=True)
     
     #changes labeling for the Indian region
     df.region = np.where(df.region == 'IN', 'IND', df.region)

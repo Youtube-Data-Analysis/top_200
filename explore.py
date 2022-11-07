@@ -319,8 +319,8 @@ def category_views3(train,population_name="categoryId",numerical_feature="view_c
         print("----------")
     
     
-def sport_biograms(train):
-    '''biograms sport'''
+def sport_bigrams(train):
+    '''bigrams sport'''
     Sports = ' '.join(train[train.categoryId == 'Sports'].lemmatized).split()
     top_20_ham_bigrams = (pd.Series(nltk.ngrams(Sports, 2))
                           .value_counts()
@@ -336,8 +336,8 @@ def sport_biograms(train):
     labels = top_20_ham_bigrams.reset_index()['index'].apply(lambda t: t[0] + ' ' + t[1])
     _ = plt.yticks(ticks, labels)
     
-def entertainment_biograms(train):
-    '''biograms entertainment'''
+def entertainment_bigrams(train):
+    '''bigrams entertainment'''
     Entertainment = ' '.join(train[train.categoryId == 'Entertainment'].lemmatized).split()
     top_20_ham_bigrams = (pd.Series(nltk.ngrams(Entertainment, 2))
                           .value_counts()
@@ -353,8 +353,8 @@ def entertainment_biograms(train):
     labels = top_20_ham_bigrams.reset_index()['index'].apply(lambda t: t[0] + ' ' + t[1])
     _ = plt.yticks(ticks, labels)
     
-def gaming_biograms(train):
-    '''biogramsgaming '''
+def gaming_bigrams(train):
+    '''bigramsgaming '''
     Gaming = ' '.join(train[train.categoryId == 'Gaming'].lemmatized).split()
     top_20_ham_bigrams = (pd.Series(nltk.ngrams(Gaming, 2))
                           .value_counts()
@@ -371,8 +371,8 @@ def gaming_biograms(train):
     _ = plt.yticks(ticks, labels)
     
     
-def Music_biograms(train):
-    '''biograms music'''
+def Music_bigrams(train):
+    '''bigrams music'''
     Music = ' '.join(train[train.categoryId == 'Music'].lemmatized).split()
     top_20_ham_bigrams = (pd.Series(nltk.ngrams(Music, 2))
                           .value_counts()

@@ -422,7 +422,7 @@ def word_count2(train):
         most_common_list.append(most_common[:5].index.tolist())
     lang["most_common"] = pd.Series(most_common_list)
     lang["count_set_words"] = lang["Words"].apply(set).apply(len)
-    sns.pointplot(data=lang, x="count_set_words", y="Language",height=11,aspect=1.5)
+    sns.pointplot(data=lang, x="count_set_words", y="Language")
     plt.title('Total count of words')
     plt.show()
     

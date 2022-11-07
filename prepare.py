@@ -327,6 +327,6 @@ def final_prep():
     df.drop(columns='index', inplace=True)
 
     #creates local pickle file for future usage in order to save time. else at 2+hr creation process 
-    df.to_pickle('pesty.pkl')
+    df.to_pickle('prepared.pkl')
 
     return df

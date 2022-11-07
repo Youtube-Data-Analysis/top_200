@@ -1,5 +1,4 @@
 import requests, sys, time, os, argparse
-from apscheduler.schedulers.background import BackgroundScheduler
 
 def grab_vidz():
     # List of simple to collect features

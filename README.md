@@ -125,11 +125,13 @@ content_rate            |rate of channel content release            | 2019 | flo
 ## <a name="pipeline"></a>Pipeline Conclusions and Takeaways:
 
 ##  Wrangling Takeaways
-* ** VINCENT ** Insert
-* Feature creation was large workload as scraping provided just basic info
-* Had to generate features for further surface level insight
-* Alot of time spent converting date into useable formats for exploration
+* Using the Youtube API and Youtube Analytics API we pulled in base level statistics for videos and channels
+* We planned this out using a API scraper and CRONtabs to automate the video scraping to occur every hour on the hour over a 3 day period.
+* Videos pulled were all trending videos from 11 countries, videos pulled from each country were that country's respective top 200 trending videos.
+* Format of some features from the API were a nuisance:
   * Example: `duration` being a string
+  * Example: `categoryId` being a numerical value that had to be encoded to represent the category name.
+  * Example: `trending_date` not being in the same format as `PublishedAt`
 
 ### Nulls/Missing Values
 * Nulls found in `descriptions` were handled by filling with 'No Description"

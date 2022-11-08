@@ -23,7 +23,7 @@ from sklearn.linear_model import LogisticRegression
 #from sklearn.model_selection import cross_val_score
 from sklearn.neighbors import KNeighborsClassifier
 
-#import env
+import env
 import model
 import os
 #-----------------------------------------------------------------------------------------------------------
@@ -90,20 +90,19 @@ def getting_(train_scaled,validate_scaled,test_scaled):
     #y will be our target variable
     #these features have high correlation to top_25 videos
 
-    scaled_features = ['age_scaled', 'num_of_tags_scaled','duration_scaled', 'num_of_tags_scaled',
-        'engagement_scaled', 'sponsored_scaled', 'title_in_description', 'title_in_tags',
-        'pct_tags_in_description', 'title_lengths', 'desc_lengths',
-        'tags_length']
-    X_train = train_scaled[scaled_features]
+    #scaled_features = ['age_scaled', 'num_of_tags_scaled','duration_scaled', 'num_of_tags_scaled',
+       # 'engagement_scaled', 'sponsored_scaled', 'title_in_description', 'title_in_tags',
+        #'pct_tags_in_description', 'title_lengths', 'desc_lengths',
+        #'tags_length', 'channel_age_scaled','subscribers_scaled','video_count_scaled','content_rate_scaled',
+        #'views_per_sub_scaled']
+    X_train = train_scaled.drop(columns='top_25')#[scaled_features]
     y_train = train_scaled['top_25']
-    X_validate = validate_scaled[scaled_features]
+    X_validate = validate_scaled.drop(columns='top_25')#[scaled_features]
     y_validate = validate_scaled['top_25']
-    X_test = test_scaled[scaled_features]
+    X_test = test_scaled.drop(columns='top_25')#[scaled_features]
     y_test= test_scaled['top_25']
 
     return X_train, y_train, X_validate, y_validate, X_test, y_test
-
-
 
 #-----------------------------------------------------------------------------------------------------------
 #models
@@ -117,7 +116,7 @@ def run_decision_tree_models(X_train, y_train, X_validate, y_validate):
     #loop the model with changing max depth only
     model_scores = []
 
-    for i in range(1,15):
+    for i in range(1,12):
         model = DecisionTreeClassifier(max_depth=i, random_state =123)
         model.fit(X_train, y_train)
         y_pred = model.predict(X_train)
@@ -139,9 +138,9 @@ def run_random_forest_models(X_train, y_train, X_validate, y_validate):
 
     model_scores = []
 
-    for i in range(1,12):
+    for i in range(5,20):
 
-        model = RandomForestClassifier(max_depth = i,random_state=123)
+        model = RandomForestClassifier(max_depth = i, min_samples_leaf =2,random_state=123)
         model.fit(X_train, y_train)
         y_pred = model.predict(X_train)
         accuracy_train = model.score(X_train,y_train)
@@ -203,13 +202,12 @@ def run_logistic_reg_models(X_train, y_train, X_validate, y_validate):
 #Test Model
 def run__on_test(X_train, y_train, X_test, y_test):
     #create, fit, use, model information to model_features dfram
-    model = DecisionTreeClassifier(max_depth=14, random_state=123)
+    model = DecisionTreeClassifier(max_depth=6, random_state=123)
     #features to be used
 
-    scaled_features = ['age_scaled', 'num_of_tags_scaled','duration_scaled', 'num_of_tags_scaled',
-           'engagement_scaled', 'sponsored_scaled', 'title_in_description', 'title_in_tags',
-           'pct_tags_in_description', 'title_lengths', 'desc_lengths',
-        'tags_length']
+    scaled_features = ['age','duration','num_of_tags','engagement','sponsored', 'title_in_description', 
+        'title_in_tags','pct_tags_in_description', 'title_lengths', 'desc_lengths','tags_length',
+                     'channel_age','subscribers','video_count','content_rate','views_per_sub']
     #fit model
     model.fit(X_train, y_train)
     #score model to add to model description dataframe

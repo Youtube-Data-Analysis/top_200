@@ -66,40 +66,46 @@ ___
 
 ## <a name="dictionary"></a>Data Dictionary  
 
-| Feature               | Non-Null       | Count    | Dtype      |
-:-----------------------|:---------------|:---------|:-----------|
-video_id                | 9536           | non-null | object     |
-title                   | 9536           | non-null | object     |
-publishedAt             | 9536           | non-null | datetime64 |
-channelTitle            | 9536           | non-null | object     |
-categoryId              | 9536           | non-null | object     |
-trending_date           | 9536           | non-null | datetime64 |
-tags                    | 9536           | non-null | object     |
-view_count              | 9536           | non-null | int64      |
-likes                   | 9536           | non-null | int64      |
-comment_count           | 9536           | non-null | int64      |
-thumbnail_link          | 9536           | non-null | object     |
-comments_disabled       | 9536           | non-null | bool       |
-ratings_disabled        | 9536           | non-null | bool       |
-description             | 9536           | non-null | object     |
-duration                | 9536           | non-null | int64      |
-captions                | 9536           | non-null | bool       |
-region                  | 9536           | non-null | object     |
-rank                    | 9536           | non-null | int64      |
-top_25 (target)         | 9536           | non-null | int64      |
-age                     | 9536           | non-null | float64    |
-engagement              | 9536           | non-null | float64    |
-sponsored               | 9536           | non-null | int64      |
-num_of_tags             | 9536           | non-null | int64      |
-word_bank               | 9536           | non-null | object     |
-cleaned_tags            | 9536           | non-null | object     |
-cleaned_desc            | 9536           | non-null | object     |
-title_in_description    | 9536           | non-null | int64      |
-title_in_tags           | 9536           | non-null | int64      |
-pct_tags_in_description | 9536           | non-null | float64    |
-title_lengths           | 9536           | non-null | int64      |
-desc_lengths            | 9536           | non-null | int64      |
-tags_length             | 9536           | non-null | int64      |
+| Column (*engineered)  |Description     | Count    | Dtype      
+:-----------------------|:---------------|:---------|:-----------
+------                  | -------------- | -----    | ---    
+video_id                |idenfitification code                      | 2019 | object     
+title                   |title of video                             | 2019 | object     
+publishedAt             |datetieme of publishing                    | 2019 | datetime64 
+channelTitle            |title of publishing channel                | 2019 | object     
+categoryId              |category designation                       | 2019 | object     
+trending_date           |trending date                              | 2019 | datetime64 
+tags                    |video tags                                 | 2019 | object     
+view_count              |number of video views                      | 2019 | int64      
+likes                   |number of video likes                      | 2019 | int64      
+comment_count           |number of video comments                   | 2019 | int64      
+thumbnail_link          |status of video thumbnail                  | 2019 | object     
+comments_disabled       |status of video comments                   | 2019 | bool       
+ratings_disabled        |status of video ratings                    | 2019 | bool       
+description             |video description                          | 2019 | object     
+duration                |video duration                             | 2019 | int64      
+captions                |status of video captions                   | 2019 | bool       
+region                  |region video appears on list               | 2019 | object     
+rank                    |higest rank on trending list               | 2019 | int64      
+top_25                  |status in top 25 on trending list          | 2019 | int64      
+channel_age             |age of channel                             | 2019 | int64      
+subscribers             |number of channel subscribers              | 2019 | int64      
+video_count             |number of videos published by channel      | 2019 | int64      
+age                     |age of video                               | 2019 | float64    
+engagement              |level of video engagement                  | 2019 | float64    
+sponsored               |status of video sponsorship                | 2019 | int64      
+num_of_tags             |number of tags used for video              | 2019 | int64      
+word_bank               |list of words used in description          | 2019 | object     
+cleaned_tags            |set of tags used                           | 2019 | object     
+cleaned_desc            |set of words used in description           | 2019 | object     
+title_in_description    |status of title in description             | 2019 | int64      
+title_in_tags           |status of title in tags                    | 2019 | int64      
+pct_tags_in_description |percent of tags appearing in description   | 2019 | float64    
+title_lengths           |length of title                            | 2019 | int64      
+desc_lengths            |length of description                      | 2019 | int64      
+tags_length             |length of tags                             | 2019 | int64      
+views_per_sub           |video views per channel subscriber         | 2019 | float64    
+content_rate            |rate of channel content release            | 2019 | float64    
 
 ---
 

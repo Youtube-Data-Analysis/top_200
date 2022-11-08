@@ -164,7 +164,6 @@ content_rate            |rate of channel content release            | 2019 | flo
 
 ## <a name="conclusion"></a>Conclusion, and Next Steps:
 
-# Conclusion
 ## Summary of Key Findings
 * Entertaiment videos are by far the most popular
 * Non-Profit videos receive the most engagement

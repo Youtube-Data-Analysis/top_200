@@ -317,11 +317,23 @@ def final_prep():
     #converts the age category timedelta into hours .. so the videos are x hours old now 
     df.age = (df.age.dt.days * 24) + (df.age.dt.seconds/3600)
 
+    #converts channel_age to days
+    df.channel_age = pd.to_datetime(df.channel_age, utc=True)
+    fresh = pd.to_datetime('2022-11-02', utc=True)
+    df.channel_age = abs(fresh - df.channel_age)
+    df.channel_age = df.channel_age.dt.days
+
     #create features based on length of information within each specified column
     df['title_lengths'] = df["title"].apply(lambda x: len(x))
     df['desc_lengths'] = df["description"].apply(lambda x: 0 if pd.isnull(x) else len(x))
     df['tags_length'] = df['tags'].apply(lambda x: len(x.replace('|', '')) if x != '[none]' else 0)
 
+    #creates metrics based on video count
+    df['content_rate'] = df.video_count / df.channel_age
+
+    #creates metric based on view count and subscriber relationship
+    df['views_per_sub'] = df.view_count/df.subscribers
+    
     df.reset_index(inplace=True)
 
     df.drop(columns='index', inplace=True)

@@ -112,12 +112,21 @@ content_rate            |rate of channel content release            | 2019 | flo
 ## <a name="reproduce"></a>Reproduction Requirements:
 
 * Utilize the linked .pkl file that contains the data for the project
-  * https://drive.google.com/file/d/1twg97V0zm_OUcnyWqzYRs38iNuI-5Yc1/view?usp=share_link
+  *  <a href="https://drive.google.com/file/d/1twg97V0zm_OUcnyWqzYRs38iNuI-5Yc1/view?usp=share_link">Prepared Dataframe</a>   
   * Alternatively, you will need your own Youtube Analytics API key *** to acquire new data
 * Follow the steps below:
   * Download prepared.pkl, acquire.py, model.py, explore.py, and final_report.ipynb files
     * Alternate: run scraper.py with your Youtube API credentials and download the above files.
   * Run the final_report.ipynb notebook
+<details>
+<summary> Tech Stack Highlights:</summary>
+<a href="https://developers.google.com/youtube/analytics/">Youtube Analytics API</a> |
+<a href="https://developers.google.com/youtube/v3/">Youtube API</a> |
+<a href="https://spacy.io/">Spacy</a> |
+<a href="https://www.tableau.com/">Tableau</a> |   
+<a href="https://crontab.guru">Chron Tab</a>   
+</details>
+
 
 [[Back to top](#top)]
 

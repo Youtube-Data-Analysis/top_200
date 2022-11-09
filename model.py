@@ -116,7 +116,7 @@ def run_decision_tree_models(X_train, y_train, X_validate, y_validate):
     #loop the model with changing max depth only
     model_scores = []
 
-    for i in range(1,12):
+    for i in range(5,15):
         model = DecisionTreeClassifier(max_depth=i, random_state =123)
         model.fit(X_train, y_train)
         y_pred = model.predict(X_train)
@@ -138,7 +138,7 @@ def run_random_forest_models(X_train, y_train, X_validate, y_validate):
 
     model_scores = []
 
-    for i in range(5,20):
+    for i in range(10,20):
 
         model = RandomForestClassifier(max_depth = i, min_samples_leaf =2,random_state=123)
         model.fit(X_train, y_train)
@@ -185,24 +185,33 @@ def run_kneighbors_models(X_train, y_train, X_validate, y_validate):
 
 def run_logistic_reg_models(X_train, y_train, X_validate, y_validate):
     """
-    Run logistic models on data varying solver and C value
+    Run models with Logistic Regression and turn it into a dataframe
     """
-    model = LogisticRegression(C = .1, random_state=123)
-    model=model.fit(X_train,y_train)
-    y_pred = model.predict(X_train)
-    accuracy_train = model.score(X_train,y_train)
-    accuracy_validate = model.score(X_validate,y_validate)
-    difference = accuracy_train-accuracy_validate
-    output = { "accuracy_train":accuracy_train,"accuracy_validate":accuracy_validate,"difference":difference}
-    
-    return output  
+
+    #For loop for lr 
+    empty_model = []
+    for k in range(1):
+        model = LogisticRegression(C = .1, random_state=123)
+        model=model.fit(X_train,y_train)
+        y_pred = model.predict(X_train)
+        accuracy_train = model.score(X_train,y_train)
+        accuracy_validate = model.score(X_validate,y_validate)
+        difference = accuracy_train-accuracy_validate
+        output = { "accuracy_train":accuracy_train,"accuracy_validate":accuracy_validate,"difference":difference}
+   
+        
+        empty_model.append(output)
+
+    df = pd.DataFrame(empty_model)
+
+    return df 
 
 
 #-----------------------------------------------------------------------------------------------------------
 #Test Model
 def run__on_test(X_train, y_train, X_test, y_test):
     #create, fit, use, model information to model_features dfram
-    model = DecisionTreeClassifier(max_depth=6, random_state=123)
+    model = RandomForestClassifier(max_depth = 15, min_samples_leaf =2,random_state=123)
     #features to be used
 
     scaled_features = ['age','duration','num_of_tags','engagement','sponsored', 'title_in_description', 
@@ -214,3 +223,5 @@ def run__on_test(X_train, y_train, X_test, y_test):
     score = model.score(X_test, y_test).round(3)
     
     return score
+
+

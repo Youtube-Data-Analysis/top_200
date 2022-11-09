@@ -71,7 +71,7 @@ ___
 ------                  | -------------- | -----    | ---    
 video_id                |idenfitification code                      | 2019 | object     
 title                   |title of video                             | 2019 | object     
-publishedAt             |datetieme of publishing                    | 2019 | datetime64 
+publishedAt             |date time of publishing                    | 2019 | datetime64 
 channelTitle            |title of publishing channel                | 2019 | object     
 categoryId              |category designation                       | 2019 | object     
 trending_date           |trending date                              | 2019 | datetime64 

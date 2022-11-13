@@ -107,7 +107,7 @@ def prepare_df(df):
     df["clean"] = [remove_stopwords(tokenize(basic_clean(each))) for each in df.description]
     df["stemmed"] = df.clean.apply(stem)
     df["lemmatized"] = df.clean.apply(lemmatize)
-    df=df.drop(columns=('description'))
+    #df=df.drop(columns=('description'))
     # making categorid into actual category titles
     return df
 

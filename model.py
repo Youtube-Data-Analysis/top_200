@@ -95,6 +95,7 @@ def getting_(train_scaled,validate_scaled,test_scaled):
         #'pct_tags_in_description', 'title_lengths', 'desc_lengths',
         #'tags_length', 'channel_age_scaled','subscribers_scaled','video_count_scaled','content_rate_scaled',
         #'views_per_sub_scaled']
+
     X_train = train_scaled.drop(columns='top_25')#[scaled_features]
     y_train = train_scaled['top_25']
     X_validate = validate_scaled.drop(columns='top_25')#[scaled_features]
@@ -225,3 +226,17 @@ def run__on_test(X_train, y_train, X_test, y_test):
     return score
 
 
+#-----------------------------------------------------------------------------------------------------------
+#Drop Columns
+def final_drop(df):
+    """
+    This function drops columns for Final Notebook execution of model testing
+    """
+    df = df.drop(columns=['categoryId','video_id','title','publishedAt','region','trending_date','tags','channelTitle',
+                'thumbnail_link','comments_disabled','ratings_disabled','ratings_disabled',
+                'ratings_disabled','description','captions','channel_age', 'rank',
+                'word_bank','cleaned_tags','cleaned_desc','title_in_description','title_in_tags',\
+                'clean', 'stemmed','lemmatized'],\
+                axis=1)
+
+    return df

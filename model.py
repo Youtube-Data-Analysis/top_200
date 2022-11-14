@@ -95,6 +95,10 @@ def getting_(train_scaled,validate_scaled,test_scaled):
         #'pct_tags_in_description', 'title_lengths', 'desc_lengths',
         #'tags_length', 'channel_age_scaled','subscribers_scaled','video_count_scaled','content_rate_scaled',
         #'views_per_sub_scaled']
+<<<<<<< HEAD
+=======
+
+>>>>>>> ddb65c321963dbd6bc7cfedab05785846585ef21
     X_train = train_scaled.drop(columns='top_25')#[scaled_features]
     y_train = train_scaled['top_25']
     X_validate = validate_scaled.drop(columns='top_25')#[scaled_features]
@@ -116,7 +120,11 @@ def run_decision_tree_models(X_train, y_train, X_validate, y_validate):
     #loop the model with changing max depth only
     model_scores = []
 
+<<<<<<< HEAD
     for i in range(1,12):
+=======
+    for i in range(5,15):
+>>>>>>> ddb65c321963dbd6bc7cfedab05785846585ef21
         model = DecisionTreeClassifier(max_depth=i, random_state =123)
         model.fit(X_train, y_train)
         y_pred = model.predict(X_train)
@@ -138,7 +146,11 @@ def run_random_forest_models(X_train, y_train, X_validate, y_validate):
 
     model_scores = []
 
+<<<<<<< HEAD
     for i in range(5,20):
+=======
+    for i in range(10,20):
+>>>>>>> ddb65c321963dbd6bc7cfedab05785846585ef21
 
         model = RandomForestClassifier(max_depth = i, min_samples_leaf =2,random_state=123)
         model.fit(X_train, y_train)
@@ -185,6 +197,7 @@ def run_kneighbors_models(X_train, y_train, X_validate, y_validate):
 
 def run_logistic_reg_models(X_train, y_train, X_validate, y_validate):
     """
+<<<<<<< HEAD
     Run logistic models on data varying solver and C value
     """
     model = LogisticRegression(C = .1, random_state=123)
@@ -196,13 +209,39 @@ def run_logistic_reg_models(X_train, y_train, X_validate, y_validate):
     output = { "accuracy_train":accuracy_train,"accuracy_validate":accuracy_validate,"difference":difference}
     
     return output  
+=======
+    Run models with Logistic Regression and turn it into a dataframe
+    """
+
+    #For loop for lr 
+    empty_model = []
+    for k in range(1):
+        model = LogisticRegression(C = .1, random_state=123)
+        model=model.fit(X_train,y_train)
+        y_pred = model.predict(X_train)
+        accuracy_train = model.score(X_train,y_train)
+        accuracy_validate = model.score(X_validate,y_validate)
+        difference = accuracy_train-accuracy_validate
+        output = { "accuracy_train":accuracy_train,"accuracy_validate":accuracy_validate,"difference":difference}
+   
+        
+        empty_model.append(output)
+
+    df = pd.DataFrame(empty_model)
+
+    return df 
+>>>>>>> ddb65c321963dbd6bc7cfedab05785846585ef21
 
 
 #-----------------------------------------------------------------------------------------------------------
 #Test Model
 def run__on_test(X_train, y_train, X_test, y_test):
     #create, fit, use, model information to model_features dfram
+<<<<<<< HEAD
     model = DecisionTreeClassifier(max_depth=6, random_state=123)
+=======
+    model = RandomForestClassifier(max_depth = 15, min_samples_leaf =2,random_state=123)
+>>>>>>> ddb65c321963dbd6bc7cfedab05785846585ef21
     #features to be used
 
     scaled_features = ['age','duration','num_of_tags','engagement','sponsored', 'title_in_description', 
@@ -213,4 +252,24 @@ def run__on_test(X_train, y_train, X_test, y_test):
     #score model to add to model description dataframe
     score = model.score(X_test, y_test).round(3)
     
+<<<<<<< HEAD
     return score
+=======
+    return score
+
+
+#-----------------------------------------------------------------------------------------------------------
+#Drop Columns
+def final_drop(df):
+    """
+    This function drops columns for Final Notebook execution of model testing
+    """
+    df = df.drop(columns=['categoryId','video_id','title','publishedAt','region','trending_date','tags','channelTitle',
+                'thumbnail_link','comments_disabled','ratings_disabled','ratings_disabled',
+                'ratings_disabled','description','captions','channel_age', 'rank',
+                'word_bank','cleaned_tags','cleaned_desc','title_in_description','title_in_tags',\
+                'clean', 'stemmed','lemmatized'],\
+                axis=1)
+
+    return df
+>>>>>>> ddb65c321963dbd6bc7cfedab05785846585ef21

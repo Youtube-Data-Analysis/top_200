@@ -246,7 +246,12 @@ def comments_views2(train):
     '''comment count graph compared to engagement'''
     #the amount of comments effect the amoutn. of views 
     plt.figure(figsize=(18,10))
-    sns.lineplot(data=train,x='comment_count',y='engagement',hue='categoryId')
+    sns.regplot(data=train[train.comment_count < 30000],x='subscribers',y='engagement')
+    plt.title('view per comment_count')
+    plt.show()
+    #the amount of comments effect the amoutn. of views 
+    plt.figure(figsize=(18,10))
+    sns.regplot(data=train[train.comment_count < 100000],x='subscribers',y='engagement')
     plt.title('view per comment_count')
     plt.show()
     
@@ -427,14 +432,79 @@ def word_count2(train):
     plt.show()
     
     
-def region_category(train):
+
+def Region_categories(train):
     '''comparing categories with region '''
-    #fix the percentages
-    plt.figure(figsize=(30,20))
-    plt.title('view per category')
-    plt.xticks(rotation=90)
-    sns.barplot(data=train,x=train.categoryId, y=train.view_count,hue=train.region)
-    plt.show()
+    top25_only=train[train.top_25==1]
+    Not_top=train[train.top_25==0]
+    Russia=top25_only[top25_only.region=='Russia']
+    Korea=top25_only[top25_only.region=='Korea']
+    Germany=top25_only[top25_only.region=='Germany']
+    Japan=top25_only[top25_only.region=='Japan']
+    Mexico=top25_only[top25_only.region=='Mexico']
+    Brazil=top25_only[top25_only.region=='Brazil']
+    France=top25_only[top25_only.region=='France']
+    United_Kingdon=top25_only[top25_only.region=='United_Kingdon']
+    Canada=top25_only[top25_only.region=='Canada']
+    United_States=top25_only[top25_only.region=='United_States']
+    India=top25_only[top25_only.region=='India']
+    fig, axs = plt.subplots(2, 2, figsize=(15, 15))
+    fig.tight_layout()
+    plt.subplots_adjust(left=0, bottom=.5, right=.8, top=2, wspace=.3, hspace=1)
+    #
+    plt.subplot(521) 
+    ax1 = sns.barplot(data=Mexico, x='categoryId', y='view_count')
+    ax1.tick_params(labelrotation=90)
+    ax1.title.set_text('Mexico by categoryId') 
+    plot_conf(ax1)
+    #
+    plt.subplot(522) 
+    ax2 = sns.barplot(data=Russia, x='categoryId', y='view_count')
+    ax2.tick_params(labelrotation=90)
+    ax2.title.set_text('Russia by categoryId') 
+    plot_conf(ax2)
+    #
+    plt.subplot(523) 
+    ax3 = sns.barplot(data=Korea, x='categoryId', y='view_count')
+    ax3.tick_params(labelrotation=90)
+    ax3.title.set_text('Korea by categoryId ')
+    plot_conf(ax3)
+    #
+    plt.subplot(524) 
+    ax4 = sns.barplot(data=Brazil, x='categoryId', y='view_count')
+    ax4.tick_params(labelrotation=90)
+    ax4.title.set_text('Brazil by categoryId')
+    plot_conf(ax4)
+    #
+    plt.subplot(525)
+    ax5 = sns.barplot(data=Germany, x='categoryId', y='view_count')
+    ax5.tick_params(labelrotation=90)
+    ax5.title.set_text('Germany by categoryId')
+    plot_conf(ax5)
+    #
+    plt.subplot(526)
+    ax6 = sns.barplot(data=France, x='categoryId', y='view_count')
+    ax6.tick_params(labelrotation=90)
+    ax6.title.set_text('France by categoryId')
+    plot_conf(ax6)
+    #
+    plt.subplot(527) 
+    ax4 = sns.barplot(data=United_Kingdon, x='categoryId', y='view_count')
+    ax4.tick_params(labelrotation=90)
+    ax4.title.set_text('United_Kingdon by categoryId')
+    plot_conf(ax4)
+    #
+    plt.subplot(528)
+    ax5 = sns.barplot(data=Canada, x='categoryId', y='view_count')
+    ax5.tick_params(labelrotation=90)
+    ax5.title.set_text('Canada by categoryId')
+    plot_conf(ax5)
+    #
+    plt.subplot(529)
+    ax6 = sns.barplot(data=United_States, x='categoryId', y='view_count')
+    ax6.tick_params(labelrotation=90)
+    ax6.title.set_text('United_States by categoryId')
+    plot_conf(ax6)
     
 def region_category2(train):
     '''Does region effect what categories would be trending or not '''

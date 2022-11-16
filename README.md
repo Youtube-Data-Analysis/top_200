@@ -166,8 +166,8 @@ content_rate            |rate of channel content release            | 2019 | flo
 ## Modeling Summary
 - Random Forest and Decision Tree models had roughly almost the same accuracy for train and validate sets.
 - KNeighbors Classifier and Logistic Regression model performed the worst on out-of-sample data.
-- The best performing model is Random Forest Classifier.
-- However, from the above model analysis we can see that the highest accuracy is achieved by Random Forest. It performs better than baseline by about 7%.
+- The best performing model is Random Forest Classifier with 88% on validate data.
+- Our model analysis shows that the highest accuracy is achieved by Random Forest. It performs better than baseline by about 7%.
 
 - While this is an improvement there is still room for improvement in future iterations
   --- 

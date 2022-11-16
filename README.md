@@ -32,7 +32,7 @@ ___
 
 ## <a name="research_questions"></a>Research Questions:
 
-* Are videos with disabled comments obtaining more views the none disable comments?
+* Are videos with disabled comments obtaining more views than videos with comments enabled?
   
 * Do comments and views have a correlation together?
    
@@ -58,7 +58,7 @@ ___
   - Choose the model that performs the best and evaluate that single model on the test dataset.
   - Document conclusions, takeaways, and next steps in the Final Report Notebook.
   - Prepare slideshow and recorded presentation for classmate and faculty consumption
-    - Slide deck available *here <insert URL to slide deck>*
+    - <a href="https://www.canva.com/design/DAFRgqbqMb4/jL0rbqmbBK6sTbZWcNDMXw/view?utm_content=DAFRgqbqMb4&utm_campaign=designshare&utm_medium=link&utm_source=publishsharelink">Slide deck</a>*
 - Phase Two of Project 
   - Decide on focus for expanded data acquisition relating to Youtube Channel content. 
   - Incorporate data into existing streams
@@ -143,9 +143,11 @@ content_rate            |rate of channel content release            | 2019 | flo
   * Example: `duration` being a string
   * Example: `categoryId` being a numerical value that had to be encoded to represent the category name.
   * Example: `trending_date` not being in the same format as `PublishedAt`
+---
 
 ### Nulls/Missing Values
 * Nulls found in `descriptions` were handled by filling with 'No Description"
+---
 
 ### Feature Engineering (Highlights)
 * Top 25 (TARGET): Has the video ever been ranked in the top 25
@@ -153,7 +155,6 @@ content_rate            |rate of channel content release            | 2019 | flo
 * Engagement: The level of audience engagement
 * Word Bank: Words in the tags and descriptions
 * Age: How old was a video at its peak rank
-
 ---
 
 ## Exploration Summary
@@ -168,12 +169,10 @@ content_rate            |rate of channel content release            | 2019 | flo
 - KNeighbors Classifier and Logistic Regression model performed the worst on out-of-sample data.
 - The best performing model is Random Forest Classifier with 88% on validate data.
 - Our model analysis shows that the highest accuracy is achieved by Random Forest. It performs better than baseline by about 7%.
-
 - While this is an improvement there is still room for improvement in future iterations
   --- 
 
 [[Back to top](#top)]
-
 
 ## <a name="conclusion"></a>Conclusion, and Next Steps:
 

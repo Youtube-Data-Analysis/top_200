@@ -251,7 +251,8 @@ def comments_views2(train):
     plt.show()
     #the amount of comments effect the amoutn. of views 
     plt.figure(figsize=(18,10))
-    sns.regplot(data=train[train.comment_count < 100000],x='subscribers',y='engagement')
+    sns.regplot(data=train[train.comment_count < 30000],x='subscribers',y='engagement')
+    plt.xlim(0,4000000)
     plt.title('view per comment_count')
     plt.show()
     
@@ -332,7 +333,7 @@ def sport_bigrams(train):
                           .head(25))
     top_20_ham_bigrams.sort_values(ascending=False).plot.barh(color='yellow', width=.9, figsize=(10, 6))
 
-    plt.title('25 Most frequently occuring sport bigrams')
+    plt.title('25 Most frequently occuring bigrams in the Sports category')
     plt.ylabel('Bigram')
     plt.xlabel('# Occurances')
 
@@ -349,7 +350,7 @@ def entertainment_bigrams(train):
                           .head(25))
     top_20_ham_bigrams.sort_values(ascending=False).plot.barh(color='blue', width=.9, figsize=(10, 6))
 
-    plt.title('25 Most frequently occuring Entertainment bigrams')
+    plt.title('25 Most frequently occuring bigrams in the Entertainment category')
     plt.ylabel('Bigram')
     plt.xlabel('# Occurances')
 
@@ -366,7 +367,7 @@ def gaming_bigrams(train):
                           .head(25))
     top_20_ham_bigrams.sort_values(ascending=False).plot.barh(color='red', width=.9, figsize=(10, 6))
 
-    plt.title('25 Most frequently occuring Entertainment bigrams')
+    plt.title('25 Most frequently occuring bigrams in the Gaming category')
     plt.ylabel('Bigram')
     plt.xlabel('# Occurances')
 
@@ -384,7 +385,7 @@ def Music_bigrams(train):
                           .head(25))
     top_20_ham_bigrams.sort_values(ascending=False).plot.barh(color='green', width=.9, figsize=(10, 6))
 
-    plt.title('25 Most frequently occuring Entertainment bigrams')
+    plt.title('25 Most frequently occuring bigrams in the Music category')
     plt.ylabel('Bigram')
     plt.xlabel('# Occurances')
 
@@ -407,11 +408,11 @@ def word_count(train):
         most_common = looped_series[looped_series > looped_series.quantile(.95)]
         most_common_list.append(most_common[:5].index.tolist())
     lang["most_common"] = pd.Series(most_common_list)
-    lang["count_set_words"] = lang["Words"].apply(set).apply(len)
-    sns.catplot(data=lang, x="count_set_words", y="Language", kind="bar",height=11,aspect=1.5)
+    lang["count_set_words"] = lang["Words"].apply(set).apply(len).mode()
+    result = lang.groupby(["Language"])['count_set_words'].aggregate(np.median).reset_index().sort_values('Language')
+    sns.catplot(data=lang, x="count_set_words", y="Language", kind="bar",height=11,aspect=1.5,order=result['Language'])
     plt.title('Total count of words')
     plt.show()
-    print(lang.count_set_words)
     
 def word_count2(train):
     '''total word count for all of categories'''
@@ -427,7 +428,8 @@ def word_count2(train):
         most_common_list.append(most_common[:5].index.tolist())
     lang["most_common"] = pd.Series(most_common_list)
     lang["count_set_words"] = lang["Words"].apply(set).apply(len)
-    sns.pointplot(data=lang, x="count_set_words", y="Language")
+    result = df.groupby(["categoryId"])['categoryId'].aggregate(np.median).reset_index().sort_values('categoryId')
+    sns.pointplot(data=lang, x="count_set_words", y="Language",order=result['categoryId'])
     plt.title('Total count of words')
     plt.show()
     

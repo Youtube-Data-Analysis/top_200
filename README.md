@@ -34,11 +34,13 @@ ___
 
 * Are videos with disabled comments obtaining more views the none disable comments?
   
-* Does comment value and views have a correlation together?
+* Do comments and views have a correlation together?
    
-* What is the most frequent occuring bigrams per category?
+* Does the category affect the amount of likes received for the video?
  
-* Does category effect total amount of words?
+* What are the most frequently occuring bigrams per category?
+
+* Does category affect average amount of words in the tags and description?
 
 [[Back to top](#top)]
 

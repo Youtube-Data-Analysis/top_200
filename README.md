@@ -58,7 +58,7 @@ ___
   - Choose the model that performs the best and evaluate that single model on the test dataset.
   - Document conclusions, takeaways, and next steps in the Final Report Notebook.
   - Prepare slideshow and recorded presentation for classmate and faculty consumption
-    - <a href="https://www.canva.com/design/DAFRgqbqMb4/jL0rbqmbBK6sTbZWcNDMXw/view?utm_content=DAFRgqbqMb4&utm_campaign=designshare&utm_medium=link&utm_source=publishsharelink">Slide deck</a>*
+    - <a href="https://www.canva.com/design/DAFRgqbqMb4/jL0rbqmbBK6sTbZWcNDMXw/view?utm_content=DAFRgqbqMb4&utm_campaign=designshare&utm_medium=link&utm_source=publishsharelink">Slide deck</a>
 - Phase Two of Project 
   - Decide on focus for expanded data acquisition relating to Youtube Channel content. 
   - Incorporate data into existing streams
